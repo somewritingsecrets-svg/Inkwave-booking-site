@@ -4,252 +4,173 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>InkWave Admin — The Harbour</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --ink: #040b14; --deep: #051525; --mid: #071d35;
-      --teal: #1a8fa8; --foam: #a8d8e8; --surf: #cce8f0; --pearl: #e8f4f8;
-      --gold: #c9a96e; --danger: #e88080;
-      --font-d: 'Cormorant Garamond', serif;
-      --font-b: 'DM Sans', sans-serif;
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background:#040b14;
+      color:#cce8f0;
+      font-family:'DM Sans', sans-serif;
+      padding:20px;
     }
-    body { background: var(--ink); color: var(--surf); font-family: var(--font-b); padding: 0; }
 
     header {
-      background: linear-gradient(135deg, var(--deep), var(--mid));
-      border-bottom: 1px solid rgba(168,216,232,0.1);
-      padding: 24px 5%;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .admin-logo { font-family: var(--font-d); font-size: 1.6rem; color: var(--foam); }
-    .admin-logo span { color: var(--teal); font-style: italic; }
-    .admin-badge {
-      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
-      background: rgba(26,143,168,0.15); color: var(--teal);
-      border: 1px solid rgba(26,143,168,0.25); border-radius: 20px; padding: 4px 12px;
+      display:flex;
+      justify-content:space-between;
+      padding:20px;
+      border-bottom:1px solid rgba(255,255,255,0.1);
     }
 
-    .admin-body { padding: 40px 5%; max-width: 1100px; margin: 0 auto; }
+    .logo {
+      font-family:'Cormorant Garamond';
+      font-size:1.5rem;
+      color:#a8d8e8;
+    }
 
-    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 40px; }
-    .stat-card {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(168,216,232,0.1);
-      border-radius: 14px; padding: 22px;
-    }
-    .stat-num { font-family: var(--font-d); font-size: 2.5rem; color: var(--teal); }
-    .stat-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--surf); opacity: 0.5; margin-top: 4px; }
-
-    .section-head {
-      font-family: var(--font-d); font-size: 1.5rem; font-weight: 300;
-      color: var(--foam); margin-bottom: 20px;
-    }
-    .section-head em { color: var(--teal); font-style: italic; }
-
-    .bookings-table { width: 100%; border-collapse: collapse; }
-    .bookings-table th {
-      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--teal); padding: 10px 14px; text-align: left;
-      border-bottom: 1px solid rgba(168,216,232,0.1);
-    }
-    .bookings-table td {
-      padding: 14px 14px; font-size: 0.82rem; border-bottom: 1px solid rgba(168,216,232,0.05);
-      vertical-align: top;
-    }
-    .bookings-table tr:hover td { background: rgba(255,255,255,0.02); }
-    .scene-cell { max-width: 260px; white-space: pre-wrap; word-break: break-word; color: var(--surf); opacity: 0.7; font-style: italic; font-size: 0.78rem; }
     .badge {
-      display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.68rem;
-      background: rgba(26,143,168,0.12); color: var(--teal); border: 1px solid rgba(26,143,168,0.2);
-    }
-    .date-cell { font-family: var(--font-d); font-size: 0.95rem; color: var(--gold); }
-    .insta-cell { color: var(--teal); }
-
-    .empty-state {
-      text-align: center; padding: 80px 20px;
-      font-family: var(--font-d); font-style: italic;
-      font-size: 1.2rem; color: var(--surf); opacity: 0.3;
+      font-size:0.7rem;
+      color:#1a8fa8;
     }
 
-    .delete-btn {
-      background: none; border: 1px solid rgba(232,128,128,0.25); border-radius: 6px;
-      color: var(--danger); font-size: 0.72rem; padding: 4px 10px; cursor: pointer;
-      transition: background 0.2s;
-    }
-    .delete-btn:hover { background: rgba(232,128,128,0.12); }
-
-    .table-wrap {
-      background: rgba(255,255,255,0.03); border: 1px solid rgba(168,216,232,0.08);
-      border-radius: 16px; overflow: hidden; overflow-x: auto;
+    .container {
+      max-width:1000px;
+      margin:30px auto;
     }
 
-    .refresh-btn {
-      float: right; margin-bottom: 20px;
-      background: rgba(26,143,168,0.12); border: 1px solid rgba(26,143,168,0.25);
-      border-radius: 8px; color: var(--teal); padding: 8px 18px; cursor: pointer;
-      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
-      transition: background 0.2s;
+    table {
+      width:100%;
+      border-collapse:collapse;
+      margin-top:20px;
     }
-    .refresh-btn:hover { background: rgba(26,143,168,0.22); }
+
+    th, td {
+      padding:12px;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      font-size:0.85rem;
+      text-align:left;
+    }
+
+    th {
+      color:#1a8fa8;
+      text-transform:uppercase;
+      font-size:0.7rem;
+    }
+
+    .btn {
+      background:none;
+      border:1px solid #e88080;
+      color:#e88080;
+      padding:5px 10px;
+      cursor:pointer;
+      border-radius:6px;
+    }
+
+    .btn:hover {
+      background:#e8808020;
+    }
+
+    .empty {
+      text-align:center;
+      padding:40px;
+      opacity:0.5;
+    }
   </style>
 </head>
+
 <body>
 
 <header>
-  <div class="admin-logo"><span>Ink</span>Wave Edits</div>
-  <span class="admin-badge">🔒 Admin — The Harbour</span>
+  <div class="logo"><span style="color:#1a8fa8">Ink</span>Wave Admin</div>
+  <div class="badge">Firebase Dashboard</div>
 </header>
 
-<div class="admin-body">
+<div class="container">
 
-  <div class="stats-row" id="statsRow">
-    <div class="stat-card"><div class="stat-num" id="statTotal">—</div><div class="stat-label">Total Bookings</div></div>
-    <div class="stat-card"><div class="stat-num" id="statMonth">—</div><div class="stat-label">This Month</div></div>
-    <div class="stat-card"><div class="stat-num" id="statUpcoming">—</div><div class="stat-label">Upcoming</div></div>
-  </div>
+  <h2>Bookings</h2>
 
-  <button class="refresh-btn" onclick="loadBookings()">↻ Refresh</button>
-  <h2 class="section-head">All <em>Reservations</em></h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Instagram</th>
+        <th>Story</th>
+        <th>Genre</th>
+        <th>Scene</th>
+        <th>Action</th>
+      </tr>
+    </thead>
 
-  <div class="table-wrap">
-    <table class="bookings-table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Name</th>
-          <th>Instagram</th>
-          <th>Story</th>
-          <th>Genre</th>
-          <th>Scene</th>
-          <th>Booked At</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="bookingsBody"></tbody>
-    </table>
-  </div>
+    <tbody id="bookingsBody"></tbody>
+  </table>
+
 </div>
 
-<script>
-async function loadBookings() {
-  try {
-    const r = await fetch('/api/admin/bookings');
-    const d = await r.json();
-    const bookings = d.bookings || [];
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
-    const now   = new Date();
-    const month = now.getMonth();
-    const year  = now.getFullYear();
+const firebaseConfig = {
+  apiKey: "AIzaSyAEai-dN4SQ4vP23EC-06Djr9V2FgP29ek",
+  authDomain: "inkwave-site-15870.firebaseapp.com",
+  projectId: "inkwave-site-15870",
+  storageBucket: "inkwave-site-15870.firebasestorage.app",
+  messagingSenderId: "774996313737",
+  appId: "1:774996313737:web:b9b6b9399c9649a7252858"
+};
 
-    const upcoming = bookings.filter(b => new Date(b.date) >= new Date(now.toDateString())).length;
-    const thisMonth = bookings.filter(b => {
-      const dt = new Date(b.date);
-      return dt.getMonth() === month && dt.getFullYear() === year;
-    }).length;
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-    document.getElementById('statTotal').textContent    = bookings.length;
-    document.getElementById('statMonth').textContent    = thisMonth;
-    document.getElementById('statUpcoming').textContent = upcoming;
+// DELETE
+window.deleteBooking = async function(id) {
+  await deleteDoc(doc(db, "bookings", id));
+};
 
-    const tbody = document.getElementById('bookingsBody');
-    if (bookings.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state">The ocean is still… no bookings yet.</div></td></tr>`;
-      return;
-    }
+// READ LIVE DATA
+const q = query(collection(db, "bookings"), orderBy("timestamp", "desc"));
 
-    const sorted = [...bookings].sort((a,b) => new Date(a.date) - new Date(b.date));
-    tbody.innerHTML = sorted.map(b => {
-      const dt = new Date(b.date + 'T12:00:00');
-      const dateStr = dt.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
-      const bookedAt = b.createdAt ? new Date(b.createdAt).toLocaleString('en-IN', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : '—';
-      return `<tr>
-        <td class="date-cell">${dateStr}</td>
-        <td>${esc(b.name)}</td>
-        <td class="insta-cell">${esc(b.insta)}</td>
-        <td><strong>${esc(b.story)}</strong></td>
-        <td><span class="badge">${esc(b.genre)}</span></td>
-        <td class="scene-cell">${esc(b.scene)}</td>
-        <td style="font-size:0.75rem;opacity:0.5">${bookedAt}</td>
-        <td><button class="delete-btn" onclick="deleteBooking('${b.date}')">Remove</button></td>
-      </tr>`;
-    }).join('');
-  } catch(e) {
-    document.getElementById('bookingsBody').innerHTML =
-      `<tr><td colspan="8" style="text-align:center;padding:40px;opacity:0.4">Failed to load — is the server running?</td></tr>`;
-  }
-}
+onSnapshot(q, (snapshot) => {
+  const tbody = document.getElementById("bookingsBody");
+  let rows = "";
 
-function esc(str) {
-  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-async function deleteBooking(date) {
-  if (!confirm(`Remove booking for ${date}?`)) return;
-  try {
-    await fetch(`/api/admin/bookings/${date}`, { method: 'DELETE' });
-    loadBookings();
-  } catch(e) { alert('Failed to delete.'); }
-}
-
-loadBookings();
-</script>
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, onSnapshot, query, orderBy }
-  from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyAEai-dN4SQ4vP23EC-06Djr9V2FgP29ek",
-    authDomain: "inkwave-site-15870.firebaseapp.com",
-    projectId: "inkwave-site-15870",
-    storageBucket: "inkwave-site-15870.firebasestorage.app",
-    messagingSenderId: "774996313737",
-    appId: "1:774996313737:web:b9b6b9399c9649a7252858"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // -------------------------
-  // SAVE BOOKING (index.html)
-  // -------------------------
-  window.submitBooking = async function(e) {
-    e.preventDefault();
-
-    await addDoc(collection(db, "bookings"), {
-      name: document.getElementById("name").value,
-      phone: document.getElementById("phone").value,
-      package: document.getElementById("package").value,
-      timestamp: new Date()
-    });
-
-    alert("Booking submitted!");
+  if (snapshot.empty) {
+    tbody.innerHTML = `<tr><td colspan="6" class="empty">No bookings yet</td></tr>`;
+    return;
   }
 
-  // -------------------------
-  // SHOW BOOKINGS (admin.html)
-  // -------------------------
-  const q = query(collection(db, "bookings"), orderBy("timestamp", "desc"));
+  snapshot.forEach((docSnap) => {
+    const d = docSnap.data();
 
-  onSnapshot(q, (snapshot) => {
-    let rows = "";
-
-    snapshot.forEach(doc => {
-      let d = doc.data();
-
-      rows += `
-        <tr>
-          <td>${d.name || "—"}</td>
-          <td>${d.phone || "—"}</td>
-          <td>${d.package || "—"}</td>
-        </tr>
-      `;
-    });
-
-    const table = document.getElementById("bookingsTable");
-    if (table) table.innerHTML = rows;
+    rows += `
+      <tr>
+        <td>${d.name || "—"}</td>
+        <td>${d.insta || "—"}</td>
+        <td>${d.story || "—"}</td>
+        <td>${d.genre || "—"}</td>
+        <td>${d.scene || "—"}</td>
+        <td>
+          <button class="btn" onclick="deleteBooking('${docSnap.id}')">
+            Remove
+          </button>
+        </td>
+      </tr>
+    `;
   });
 
-  </script>
+  tbody.innerHTML = rows;
+});
+</script>
+
 </body>
 </html>
