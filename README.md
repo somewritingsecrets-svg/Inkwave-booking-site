@@ -66,8 +66,8 @@ Server starts at → **http://localhost:3000**
 
 | Package | Price | Duration |
 |---------|-------|----------|
-| Ink Wave | ₹599 | Up to 60s reel |
-| Dreamy Dive | ₹1299 | Up to 3 min cinematic |
+| Ink Wave | ₹150 | Up to 20 edits |
+| Dreamy Dive | ₹300 | Up to 40 edits |
 
 *(Edit prices/descriptions in `public/index.html` → packages section)*
 
