@@ -193,5 +193,63 @@ async function deleteBooking(date) {
 
 loadBookings();
 </script>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, onSnapshot, query, orderBy }
+  from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAEai-dN4SQ4vP23EC-06Djr9V2FgP29ek",
+    authDomain: "inkwave-site-15870.firebaseapp.com",
+    projectId: "inkwave-site-15870",
+    storageBucket: "inkwave-site-15870.firebasestorage.app",
+    messagingSenderId: "774996313737",
+    appId: "1:774996313737:web:b9b6b9399c9649a7252858"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // -------------------------
+  // SAVE BOOKING (index.html)
+  // -------------------------
+  window.submitBooking = async function(e) {
+    e.preventDefault();
+
+    await addDoc(collection(db, "bookings"), {
+      name: document.getElementById("name").value,
+      phone: document.getElementById("phone").value,
+      package: document.getElementById("package").value,
+      timestamp: new Date()
+    });
+
+    alert("Booking submitted!");
+  }
+
+  // -------------------------
+  // SHOW BOOKINGS (admin.html)
+  // -------------------------
+  const q = query(collection(db, "bookings"), orderBy("timestamp", "desc"));
+
+  onSnapshot(q, (snapshot) => {
+    let rows = "";
+
+    snapshot.forEach(doc => {
+      let d = doc.data();
+
+      rows += `
+        <tr>
+          <td>${d.name || "—"}</td>
+          <td>${d.phone || "—"}</td>
+          <td>${d.package || "—"}</td>
+        </tr>
+      `;
+    });
+
+    const table = document.getElementById("bookingsTable");
+    if (table) table.innerHTML = rows;
+  });
+
+  </script>
 </body>
 </html>
